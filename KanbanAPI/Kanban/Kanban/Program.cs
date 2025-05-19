@@ -44,12 +44,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerWithUi();
 }
 
-//if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
-//{
-//    app.ApplyMigrations();
-//}
+if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+{
+    app.ApplyMigrations();
+}
 
-app.MapHealthChecks("health", new HealthCheckOptions
+app.MapHealthChecks("healthz", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
