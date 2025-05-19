@@ -1,4 +1,6 @@
-﻿namespace KanbanAPI.Extensions;
+﻿using Prometheus;
+
+namespace KanbanAPI.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
@@ -6,6 +8,7 @@ public static class ApplicationBuilderExtensions
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseHttpMetrics();
 
         return app;
     }

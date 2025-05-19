@@ -1,5 +1,8 @@
-﻿using KanbanAPI.Endpoints;
+﻿using Application.Hubs;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Prometheus;
 using System.Reflection;
 
 namespace KanbanAPI.Extensions;
@@ -32,6 +35,21 @@ public static class EndpointExtensions
         {
             endpoint.MapEndpoint(builder);
         }
+
+        builder.MapHealthChecks("/healthz", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+        });
+
+        builder.MapHealthChecksUI(config =>
+        {
+            config.UIPath = "/healthz-ui";
+            config.ResourcesPath = "/healthz-ui-resources";
+        });
+
+        builder.MapMetrics();
+
+        builder.MapHub<TaskHub>("/hubs/tasks");
 
         return app;
     }

@@ -29,6 +29,17 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!, name: "postgresql", tags: new[] { "db", "sql" })
+    .AddRedis(builder.Configuration["Redis:ConnectionString"], name: "redis", tags: new[] { "cache", "redis" });
+
+builder.Services.AddHealthChecksUI(options =>
+{
+    options.SetEvaluationTimeInSeconds(15);
+    options.MaximumHistoryEntriesPerEndpoint(60);
+    options.AddHealthCheckEndpoint("Basic Health", "http://api:8080/healthz");
+}).AddInMemoryStorage();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -48,11 +59,6 @@ if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("DOTNE
 {
     app.ApplyMigrations();
 }
-
-app.MapHealthChecks("healthz", new HealthCheckOptions
-{
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
 
 app.UseSerilogRequestLogging();
 app.UseRequestContextLogging();

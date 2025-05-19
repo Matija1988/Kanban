@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.EntityConfigurations;
+﻿using Common;
+
+namespace Infrastructure.EntityConfigurations;
 
 internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
 {
@@ -11,6 +13,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
              .HasForeignKey(c => c.ToDoId)
              .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Property(x => x.Priority).HasConversion<string>();
+
         builder.HasData(
                   new ToDo
                   {
@@ -21,7 +25,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                       Title = "Increase power to the warp engine",
                       DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                       DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                      isInProgress = true
+                      isInProgress = true,
+                      Priority = Priority.HIGH
                   },
                    new ToDo
                    {
@@ -32,7 +37,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                        Title = "Task1",
                        DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                        DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                       isInProgress = true
+                       isInProgress = true,
+                       Priority = Priority.MED
                    },
                     new ToDo
                     {
@@ -43,7 +49,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                         Title = "Task2",
                         DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                         DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                        isInProgress = true
+                        isInProgress = true,
+                        Priority = Priority.LOW
                     },
                     new ToDo
                     {
@@ -54,7 +61,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                         Title = "Task3",
                         DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                         DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                        isInProgress = true
+                        isInProgress = true,
+                        Priority = Priority.LOW,
                     },
                      new ToDo
                      {
@@ -65,7 +73,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                          Title = "Task4",
                          DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                          DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                         isInProgress = true
+                         isInProgress = true,
+                         Priority = Priority.LOW,
                      },
                       new ToDo
                       {
@@ -76,7 +85,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                           Title = "Task5",
                           DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                           DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                          isInProgress = true
+                          isInProgress = true,
+                          Priority = Priority.LOW,
                       },
                        new ToDo
                        {
@@ -87,7 +97,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                            Title = "Task6",
                            DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                            DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                           isInProgress = true
+                           isInProgress = true,
+                           Priority = Priority.LOW,
                        },
                        new ToDo
                        {
@@ -98,7 +109,8 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                            Title = "Task7",
                            DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                            DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                           isInProgress = true
+                           isInProgress = true,
+                           Priority = Priority.LOW,
                        }
               );
     }
