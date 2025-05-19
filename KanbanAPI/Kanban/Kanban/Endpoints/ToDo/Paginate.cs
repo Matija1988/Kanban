@@ -6,7 +6,7 @@ public class Paginate : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder routeBuilder)
     {
-        routeBuilder.MapGet("api/tasks", async(bool? status, int page, int size, string? sort, IMediator sender, CancellationToken token) =>
+        routeBuilder.MapGet("api/tasks", async(Status? status, int page, int size, string? sort, IMediator sender, CancellationToken token) =>
         {
             var command = new PaginateTasksQuery(status, page, size, sort);
 

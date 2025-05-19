@@ -5,6 +5,7 @@ global using Domain.Users;
 global using Application.Abstractions.Data;
 global using Application.Abstractions.Messaging;
 global using Application.Hubs;
+global using Domain.ToDos;
 
 #endregion
 

@@ -19,13 +19,14 @@ public class ToDo : BaseEntity
     public string DateStart { get; set; }
     [StringLength(30), Required]
     public string DateEnd { get; set; }
-    public bool isInProgress { get; set; }
 
-    [Column(TypeName = "nvarchar(10)")]
+    [Column(TypeName = "varchar(10)")]
     public Priority Priority { get; set; } = Priority.MED;
 
+    [Column(TypeName = "varchar(15)")]
+    public Status Status { get; set; } = Status.TO_DO;
     public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
-    public ICollection<UserToDo>? UserToDos { get; set; } = new List<UserToDo>();
+    public ICollection<UserToDo> UserToDos { get; set; } = new List<UserToDo>();
 
 }

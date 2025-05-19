@@ -3,10 +3,11 @@ using Application.Abstractions.HATEOS;
 using Application.Abstractions.Messaging;
 using Domain.GeneralErrors;
 using Domain.ToDos;
+using System.Linq;
 
 namespace Application.Handlers.Tasks;
 
-public sealed record PaginateTasksQuery(bool? Status, int Page, int Size, string Sort) : IRequest<Result<PagedList<TodoResponse>>>;
+public sealed record PaginateTasksQuery(Status? Status, int Page, int Size, string Sort) : IRequest<Result<PagedList<TodoResponse>>>;
 internal class PaginateTasksHandler(IApplicationDbContext context, ILinkService linkService, ICacheService cache) 
     : IRequestHandler<PaginateTasksQuery, Result<PagedList<TodoResponse>>>
 {
@@ -19,27 +20,46 @@ internal class PaginateTasksHandler(IApplicationDbContext context, ILinkService 
         if (cached is not null)
             return Result.Success(cached);
 
-        var query = context.Tasks
-        .AsNoTracking();
+        IQueryable<ToDo> query = context.Tasks
+            .AsNoTracking()
+            .AsSplitQuery()
+            .Include(x => x.Comments)
+            .Include(x => x.UserToDos)
+            .ThenInclude(x => x.User);
 
-        if (request.Status.HasValue)
-            query = query.Where(x => x.isInProgress == request.Status.Value);
+        if (request.Status != null)
+            query = query.Where(x => x.Status == request.Status);
 
         var projectedQuery = query
-            .OrderBy(x => x.DateCreated)
-            .Select(x => new TodoResponse
-            {
-                Id = x.Id,
-                DateCreated = x.DateCreated,
-                CreatedBy = x.CreatedBy ?? "",
-                DateModified = x.DateModified,
-                ModifiedBy = x.ModifiedBy,
-                Title = x.Title,
-                Description = x.Description,
-                isInProgress = x.isInProgress,
-                DateEnd = x.DateEnd,
-                DateStart = x.DateStart
-            });
+     .OrderBy(x => x.DateCreated)
+     .Select(x => new TodoResponse
+     {
+         Id = x.Id,
+         DateCreated = x.DateCreated,
+         CreatedBy = x.CreatedBy ?? "",
+         DateModified = x.DateModified,
+         ModifiedBy = x.ModifiedBy,
+         Title = x.Title,
+         Description = x.Description,
+         DateEnd = x.DateEnd,
+         DateStart = x.DateStart,
+         Status = x.Status.ToString(),
+         Priority = x.Priority.ToString(),
+
+         Comments = x.Comments.Select(c => new CommentResponse(
+             c.Id,
+             c.DateCreated,
+             c.CreatedBy ?? "",
+             c.Tekst
+         )).ToList(),
+
+         Users = x.UserToDos.Select(ut => new UserResponse(
+             ut.User.Id,
+             ut.User.Username,
+             ut.User.Email,
+             ut.User.Role.Name
+         )).ToList()
+     });
 
         var pagedList = await PagedList<TodoResponse>.CreateAsync(projectedQuery, request.Page, request.Size);
 

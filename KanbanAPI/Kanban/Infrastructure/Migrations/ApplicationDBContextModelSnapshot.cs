@@ -64,8 +64,8 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("ae6139d2-375c-40df-b5ab-293346277d2f"),
                             CreatedBy = "user1",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
                             Tekst = "We will overload the flux capacitors!",
                             ToDoId = new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47")
                         });
@@ -102,14 +102,14 @@ namespace Infrastructure.Migrations
                         {
                             UserId = new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"),
                             ToDoId = new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"),
-                            AssignedDate = "5/18/2025 5:21:48 PM",
+                            AssignedDate = "5/19/2025 10:14:06 AM",
                             Id = new Guid("b68ec62d-c943-40ba-a652-3a226bb36a66")
                         },
                         new
                         {
                             UserId = new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"),
                             ToDoId = new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"),
-                            AssignedDate = "5/18/2025 5:21:48 PM",
+                            AssignedDate = "5/19/2025 10:14:06 AM",
                             Id = new Guid("32e4c3bb-900b-4dd5-b7f6-18277027985d")
                         });
                 });
@@ -179,13 +179,18 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("varchar(15)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
-
-                    b.Property<bool?>("isInProgress")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -196,89 +201,97 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Increase power to the warp engine",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "HIGH",
+                            Status = "IN_PROGRESS",
+                            Title = "Increase power to the warp engine"
                         },
                         new
                         {
                             Id = new Guid("47fb53da-e324-459e-9bb5-d2dccff741d7"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task1",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "MED",
+                            Status = "TO_DO",
+                            Title = "Task1"
                         },
                         new
                         {
                             Id = new Guid("05fc5276-8a16-450d-ba3e-4760267ec381"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task2",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task2"
                         },
                         new
                         {
                             Id = new Guid("de734256-7f1a-403d-a14c-6bd545426e08"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task3",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task3"
                         },
                         new
                         {
                             Id = new Guid("ef66ce84-4ce5-468c-92da-4745160b4a8c"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task4",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task4"
                         },
                         new
                         {
                             Id = new Guid("1be3e19f-13fe-4c3b-953e-eedbdee16134"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task5",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task5"
                         },
                         new
                         {
                             Id = new Guid("0e70a5ca-5c3b-4ba4-a5c1-6a389a37f8df"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task6",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task6"
                         },
                         new
                         {
                             Id = new Guid("09345fd8-9400-48c7-85e8-e2d5e082ac11"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
-                            DateEnd = "6/18/2025 5:21:48 PM",
-                            DateModified = "5/18/2025 5:21:48 PM",
-                            DateStart = "5/18/2025",
-                            Title = "Task7",
-                            isInProgress = true
+                            DateCreated = "5/19/2025 10:14:06 AM",
+                            DateEnd = "6/19/2025 10:14:06 AM",
+                            DateModified = "5/19/2025 10:14:06 AM",
+                            DateStart = "5/19/2025",
+                            Priority = "LOW",
+                            Status = "TO_DO",
+                            Title = "Task7"
                         });
                 });
 
@@ -334,7 +347,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("d20b73cf-aab9-459a-90d5-2d9f65bd4f91"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
+                            DateCreated = "5/19/2025 10:14:06 AM",
                             Email = "admin@example.com",
                             Password = "$2a$12$pCF8WvWAwvDtSKZJtpm9ZuPxiibhVEm4t9j8M1mAEjsa55UdVCyF2",
                             RoleId = new Guid("a11b1a7f-c5e0-45a0-ba0f-f68435c826eb"),
@@ -344,7 +357,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
+                            DateCreated = "5/19/2025 10:14:06 AM",
                             Email = "user@example.com",
                             Password = "$2a$12$KEY3WPXYB5ldI/fInlj3geJj12OCmXHu9AouvyKffORMypumTVtP.",
                             RoleId = new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"),
@@ -354,7 +367,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"),
                             CreatedBy = "seed",
-                            DateCreated = "5/18/2025 5:21:48 PM",
+                            DateCreated = "5/19/2025 10:14:06 AM",
                             Email = "user2@example.com",
                             Password = "$2a$12$dHimz4GciBJHZTDs4BoqruADW.wgIEPckq2ceCbJTkX9F.8GC/QoO",
                             RoleId = new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"),

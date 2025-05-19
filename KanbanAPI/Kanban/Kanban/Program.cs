@@ -37,15 +37,17 @@ builder.Services.AddHealthChecksUI(options =>
 {
     options.SetEvaluationTimeInSeconds(15);
     options.MaximumHistoryEntriesPerEndpoint(60);
-    options.AddHealthCheckEndpoint("Basic Health", "http://api:8080/healthz");
+    options.AddHealthCheckEndpoint("Basic Health", "http://localhost:8080/healthz");
 }).AddInMemoryStorage();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+//}
 
 app.MapEndpoints();
 app.ApplyCors();

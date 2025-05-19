@@ -10,6 +10,5 @@ internal sealed class CreateTaskValidation : AbstractValidator<CreateToDoCommand
         RuleFor(x => x.Description).MaximumLength(2000);
         RuleFor(x => x.DateTimeStart).NotEmpty();
         RuleFor(x => x.DateTimeEnd).NotEmpty();
-        RuleFor(x => x.isInProgress).NotEmpty();
     }
 }

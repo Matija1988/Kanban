@@ -23,4 +23,21 @@ public class RedisCacheService : ICacheService
         var json = JsonSerializer.Serialize(value);
         await _db.StringSetAsync(key, json, expiration);
     }
+
+    public async Task RemoveByPatternAsync(string pattern)
+    {
+        var endpoints = _db.Multiplexer.GetEndPoints();
+        foreach (var endpoint in endpoints)
+        {
+            var server = _db.Multiplexer.GetServer(endpoint);
+            if (!server.IsConnected) continue;
+
+            var keys = server.Keys(pattern: pattern).ToArray();
+
+            if (keys.Length > 0)
+            {
+                await _db.KeyDeleteAsync(keys);
+            }
+        }
+    }
 }

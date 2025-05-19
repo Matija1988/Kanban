@@ -34,7 +34,8 @@ namespace Infrastructure.Migrations
                     Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     DateStart = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     DateEnd = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    isInProgress = table.Column<bool>(type: "boolean", nullable: true),
+                    Priority = table.Column<string>(type: "varchar(10)", nullable: false),
+                    Status = table.Column<string>(type: "varchar(15)", nullable: false),
                     DateCreated = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     DateModified = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
@@ -131,32 +132,32 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tasks",
-                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateEnd", "DateModified", "DateStart", "Description", "ModifiedBy", "Title", "isInProgress" },
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateEnd", "DateModified", "DateStart", "Description", "ModifiedBy", "Priority", "Status", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("05fc5276-8a16-450d-ba3e-4760267ec381"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task2", true },
-                    { new Guid("09345fd8-9400-48c7-85e8-e2d5e082ac11"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task7", true },
-                    { new Guid("0e70a5ca-5c3b-4ba4-a5c1-6a389a37f8df"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task6", true },
-                    { new Guid("1be3e19f-13fe-4c3b-953e-eedbdee16134"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task5", true },
-                    { new Guid("47fb53da-e324-459e-9bb5-d2dccff741d7"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task1", true },
-                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Increase power to the warp engine", true },
-                    { new Guid("de734256-7f1a-403d-a14c-6bd545426e08"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task3", true },
-                    { new Guid("ef66ce84-4ce5-468c-92da-4745160b4a8c"), "seed", "5/18/2025 5:21:48 PM", "6/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", "5/18/2025", null, null, "Task4", true }
+                    { new Guid("05fc5276-8a16-450d-ba3e-4760267ec381"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task2" },
+                    { new Guid("09345fd8-9400-48c7-85e8-e2d5e082ac11"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task7" },
+                    { new Guid("0e70a5ca-5c3b-4ba4-a5c1-6a389a37f8df"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task6" },
+                    { new Guid("1be3e19f-13fe-4c3b-953e-eedbdee16134"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task5" },
+                    { new Guid("47fb53da-e324-459e-9bb5-d2dccff741d7"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "MED", "TO_DO", "Task1" },
+                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "HIGH", "IN_PROGRESS", "Increase power to the warp engine" },
+                    { new Guid("de734256-7f1a-403d-a14c-6bd545426e08"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task3" },
+                    { new Guid("ef66ce84-4ce5-468c-92da-4745160b4a8c"), "seed", "5/19/2025 10:14:06 AM", "6/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", "5/19/2025", null, null, "LOW", "TO_DO", "Task4" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateModified", "ModifiedBy", "Tekst", "ToDoId" },
-                values: new object[] { new Guid("ae6139d2-375c-40df-b5ab-293346277d2f"), "user1", "5/18/2025 5:21:48 PM", "5/18/2025 5:21:48 PM", null, "We will overload the flux capacitors!", new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47") });
+                values: new object[] { new Guid("ae6139d2-375c-40df-b5ab-293346277d2f"), "user1", "5/19/2025 10:14:06 AM", "5/19/2025 10:14:06 AM", null, "We will overload the flux capacitors!", new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47") });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateModified", "Email", "ModifiedBy", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
-                    { new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"), "seed", "5/18/2025 5:21:48 PM", null, "user2@example.com", null, "$2a$12$dHimz4GciBJHZTDs4BoqruADW.wgIEPckq2ceCbJTkX9F.8GC/QoO", new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"), "user2" },
-                    { new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"), "seed", "5/18/2025 5:21:48 PM", null, "user@example.com", null, "$2a$12$KEY3WPXYB5ldI/fInlj3geJj12OCmXHu9AouvyKffORMypumTVtP.", new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"), "user1" },
-                    { new Guid("d20b73cf-aab9-459a-90d5-2d9f65bd4f91"), "seed", "5/18/2025 5:21:48 PM", null, "admin@example.com", null, "$2a$12$pCF8WvWAwvDtSKZJtpm9ZuPxiibhVEm4t9j8M1mAEjsa55UdVCyF2", new Guid("a11b1a7f-c5e0-45a0-ba0f-f68435c826eb"), "admin" }
+                    { new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"), "seed", "5/19/2025 10:14:06 AM", null, "user2@example.com", null, "$2a$12$dHimz4GciBJHZTDs4BoqruADW.wgIEPckq2ceCbJTkX9F.8GC/QoO", new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"), "user2" },
+                    { new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"), "seed", "5/19/2025 10:14:06 AM", null, "user@example.com", null, "$2a$12$KEY3WPXYB5ldI/fInlj3geJj12OCmXHu9AouvyKffORMypumTVtP.", new Guid("121b4b8b-d3f9-4b88-ab11-857dc9941c3b"), "user1" },
+                    { new Guid("d20b73cf-aab9-459a-90d5-2d9f65bd4f91"), "seed", "5/19/2025 10:14:06 AM", null, "admin@example.com", null, "$2a$12$pCF8WvWAwvDtSKZJtpm9ZuPxiibhVEm4t9j8M1mAEjsa55UdVCyF2", new Guid("a11b1a7f-c5e0-45a0-ba0f-f68435c826eb"), "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -164,8 +165,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ToDoId", "UserId", "AssignedDate", "Id", "RemovedDate" },
                 values: new object[,]
                 {
-                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"), "5/18/2025 5:21:48 PM", new Guid("32e4c3bb-900b-4dd5-b7f6-18277027985d"), null },
-                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"), "5/18/2025 5:21:48 PM", new Guid("b68ec62d-c943-40ba-a652-3a226bb36a66"), null }
+                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), new Guid("6d8de1aa-3d88-450a-a35c-408efd8f5bb2"), "5/19/2025 10:14:06 AM", new Guid("32e4c3bb-900b-4dd5-b7f6-18277027985d"), null },
+                    { new Guid("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"), new Guid("a3b1e294-c106-4dd4-bce1-a97132d16c3d"), "5/19/2025 10:14:06 AM", new Guid("b68ec62d-c943-40ba-a652-3a226bb36a66"), null }
                 });
 
             migrationBuilder.CreateIndex(

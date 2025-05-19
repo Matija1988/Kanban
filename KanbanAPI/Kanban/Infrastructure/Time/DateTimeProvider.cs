@@ -6,5 +6,5 @@ public class DateTimeProvider : IDateTimeProvider
 {
     public DateTime UtcNow => DateTime.UtcNow;
 
-    public DateTime LocalNow => DateTime.Now;
+    public DateTime Now => DateTime.Now;
 }
