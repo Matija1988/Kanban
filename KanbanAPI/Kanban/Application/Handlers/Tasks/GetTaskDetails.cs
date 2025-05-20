@@ -5,7 +5,7 @@ namespace Application.Handlers.Tasks;
 
 public sealed record GetTaskDetailsQuery(Guid Id) : IRequest<Result<TodoResponse>>;
 
-public class GetTaskDetails(IApplicationDbContext context) : IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>
+public sealed class GetTaskDetails(IApplicationDbContext context) : IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>
 {
     public async Task<Result<TodoResponse>> Handle(GetTaskDetailsQuery request, CancellationToken cancellation = default)
     {

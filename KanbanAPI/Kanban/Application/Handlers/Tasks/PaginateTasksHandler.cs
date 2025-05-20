@@ -21,7 +21,7 @@ internal class PaginateTasksHandler(IApplicationDbContext context, ILinkService 
             .AsSplitQuery()
             .Include(x => x.Comments)
             .Include(x => x.UserToDos)
-            .ThenInclude(x => x.User);
+        .ThenInclude(x => x.User);
 
         if (request.Status != null)
             query = query.Where(x => x.Status == request.Status);

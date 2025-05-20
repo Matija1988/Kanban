@@ -32,6 +32,7 @@ public static class DependencyInjection
     private static IServiceCollection AddCachingService(this IServiceCollection services)
     {
         services.AddScoped<ICacheService, RedisCacheService>();
+        services.AddHostedService<TaskCachePreloader>();
 
         return services;
     }

@@ -18,7 +18,13 @@ public sealed class TaskNotificationHandler : INotificationHandler<TaskChangedEv
     {
         await _cache.RemoveByPatternAsync("tasks:*");
 
-        var eventName = notification.ChangeType == TaskChangeType.Created ? "TaskCreated" : "TaskUpdated";
+        string eventName = notification.ChangeType switch
+        {
+            TaskChangeType.Created => "TaskCreated",
+            TaskChangeType.Updated => "TaskUpdated",
+            TaskChangeType.Deleted => "TaskDeleted",
+            _ => "TaskChanged"
+        };
 
         await _hubContext.Clients.All.SendAsync(eventName, new
         {

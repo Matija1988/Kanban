@@ -13,6 +13,5 @@ public static class MigrationExtensions
             scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 
         dbContext.Database.Migrate();
-       // SeedToDoData.Seed(dbContext);
     }
 }

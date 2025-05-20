@@ -19,11 +19,15 @@ public static class DependancyInjection
 
         services.AddScoped<INotificationHandler<MyEvent>, MyEventHandler>();
         services.AddScoped<INotificationHandler<TaskChangedEvent>, TaskNotificationHandler>();
+        services.AddScoped<INotificationHandler<CommentChangedEvents>, CommentNotificationHandler>();
 
         services.AddScoped<IRequestHandler<PaginateTasksQuery, Result<PagedList<TodoResponse>>>, PaginateTasksHandler>();
         services.AddScoped<IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>, GetTaskDetails>();
         services.AddScoped<IRequestHandler<UpdateTaskCommand, Result<bool>>, UpdateTaskHandler>();
         services.AddScoped<IRequestHandler<CreateToDoCommand, Result<int>>, CreateTaskHandler>();
+        services.AddScoped<IRequestHandler<DeleteTaskCommand, Result<bool>>, DeleteTaskHandler>();
+
+        services.AddScoped<IRequestHandler<ChangeTaskStatusPriorityCommand, Result<bool>>, ChangeTaskStatusPriority>();
 
         services.AddScoped<IRequestHandler<LoginCommand, Result<string>>, LoginHandler>();
         services.AddScoped<IRequestHandler<RegisterUserCommand, Result<Guid>>, RegisterUserHandler>();  

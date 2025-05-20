@@ -21,4 +21,8 @@ public static class GeneralError
     public static Error UnexpectedError(string entityType) => Error.Failure(
       $"{entityType}.Ups",
       $"Operation with {entityType} failed!");
+
+    public static Error ConcurencyError(string entityType) => Error.Failure(
+    $"{entityType}.ConcurencyError",
+    $"Concurency colfict!");
 }

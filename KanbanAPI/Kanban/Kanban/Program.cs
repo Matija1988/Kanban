@@ -39,6 +39,8 @@ builder.Services.AddHealthChecksUI(options =>
 
 builder.Services.AddSignalR();
 
+builder.Services.AddRateLimiter();
+
 var app = builder.Build();
 
 //using (var scope = app.Services.CreateScope())

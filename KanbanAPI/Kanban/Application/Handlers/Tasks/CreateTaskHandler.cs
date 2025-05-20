@@ -32,7 +32,7 @@ internal sealed class CreateTaskHandler(IApplicationDbContext context, IDateTime
 
         if(success > 0)
         {
-            await mediator.Publish(new TaskChangedEvent(toDo), cancellation);
+            await mediator.Publish(new TaskChangedEvent(toDo, TaskChangeType.Created), cancellation);
         }
 
         return success > 0
