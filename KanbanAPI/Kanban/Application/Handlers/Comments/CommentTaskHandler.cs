@@ -1,11 +1,9 @@
 ﻿using Application.Abstractions.Messaging.Events;
-using Domain.Comments;
-using Domain.GeneralErrors;
 
 namespace Application.Handlers.Comments;
 
 public sealed record CommentTaskCommand(Guid TaskId, string Text, string CreatedBy, string DateCreated) : IRequest<Result<Guid>>;
-internal class CommentTask(IApplicationDbContext context, IMediator mediator)
+internal class CommentTaskHandler(IApplicationDbContext context, IMediator mediator)
     : IRequestHandler<CommentTaskCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CommentTaskCommand request, CancellationToken cancellation = default)

@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging.Events;
-using Domain.GeneralErrors;
 namespace Application.Handlers.Tasks;
 
 public sealed record CreateToDoCommand
@@ -13,6 +12,10 @@ internal sealed class CreateTaskHandler(IApplicationDbContext context, IDateTime
         var chkDateRange = CheckDateRange(request);
 
         if (chkDateRange.IsFailure) return Result.Failure<int>(chkDateRange.Error);
+
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username == request.CreatedBy, cancellationToken: cancellation);
+
+        if (user == null) return Result.Failure<int>(UserErrors.NotFoundByEmailOrUsername);
 
         var toDo = new ToDo
         {

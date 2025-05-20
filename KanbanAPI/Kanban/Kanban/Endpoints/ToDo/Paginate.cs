@@ -2,7 +2,7 @@
 
 namespace KanbanAPI.Endpoints.ToDo;
 
-public class Paginate : IEndpoint
+public sealed class Paginate : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder routeBuilder)
     {

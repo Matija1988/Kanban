@@ -6,7 +6,7 @@ namespace Domain.Comments;
 
 public class Comment : BaseEntity
 {
-    [StringLength(255), Required]
+    [StringLength(2000), Required]
     public string Tekst { get; set; }
 
     public Guid ToDoId { get; set; }

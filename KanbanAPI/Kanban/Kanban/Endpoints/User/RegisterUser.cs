@@ -1,6 +1,6 @@
 ﻿namespace Kanban.Endpoints.User;
 
-public class RegisterUser : IEndpoint
+public sealed class RegisterUser : IEndpoint
 {
     public sealed record RegisterUserRequest(string Email, string Username, string Password);
     public void MapEndpoint(IEndpointRouteBuilder routeBuilder)

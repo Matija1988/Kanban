@@ -24,7 +24,4 @@ public class UserToDo
 
     [StringLength(30), Required]
     public string AssignedDate { get; set; }
-
-    [StringLength(30)]
-    public string? RemovedDate { get; set; }
 }

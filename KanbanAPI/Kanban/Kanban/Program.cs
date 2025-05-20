@@ -59,7 +59,6 @@ if (app.Environment.IsDevelopment())
 if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
 {
     app.ApplyMigrations();
-
 }
 
 app.UseSerilogRequestLogging();

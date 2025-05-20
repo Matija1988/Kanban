@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Authentication;
-using Domain.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;

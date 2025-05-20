@@ -1,6 +1,6 @@
 ﻿namespace Kanban.Endpoints.User;
 
-public class Login : IEndpoint
+public sealed class Login : IEndpoint
 {
     public sealed record LoginRequest(string? Email, string? Username, string Password);
     public void MapEndpoint(IEndpointRouteBuilder routeBuilder)

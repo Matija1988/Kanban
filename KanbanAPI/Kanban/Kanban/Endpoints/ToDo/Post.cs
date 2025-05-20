@@ -3,7 +3,7 @@ using Application.Handlers.Tasks;
 
 namespace Kanban.Endpoints.ToDo;
 
-public class Post : IEndpoint
+public sealed class Post : IEndpoint
 {
     public sealed record PostTodoRequest
     (string Title, string? Description, string DateTimeStart, string DateTimeEnd, string CreatedBy, Priority Priority, Status Status) : IRequest<Result<int>>;

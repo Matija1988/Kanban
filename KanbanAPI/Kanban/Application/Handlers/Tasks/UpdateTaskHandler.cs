@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging.Events;
-using Domain.GeneralErrors;
 
 namespace Application.Handlers.Tasks;
 
@@ -17,6 +16,10 @@ internal class UpdateTaskHandler(IApplicationDbContext context, IDateTimeProvide
         var chkDateRange = CheckDateRange(request);
 
         context.Tasks.Entry(task).Property(t => t.RowVersion).OriginalValue = request.RowVersion;
+
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username == request.ModifiedBy, cancellationToken: cancellation);
+
+        if (user == null) return Result.Failure<bool>(UserErrors.NotFoundByEmailOrUsername);
 
         task.Id = request.Id;
         task.Title = request.Title;

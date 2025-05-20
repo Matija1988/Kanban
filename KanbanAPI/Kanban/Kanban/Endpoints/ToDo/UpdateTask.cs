@@ -1,9 +1,8 @@
-﻿
-using Application.Handlers.Tasks;
+﻿using Application.Handlers.Tasks;
 
 namespace Kanban.Endpoints.ToDo;
 
-public class UpdateTask : IEndpoint
+public sealed class UpdateTask : IEndpoint
 {
     public sealed record UpdateTaskRequest
     (Guid Id, string Title, string? Description, string? DateStart, string? DateEnd, Priority Priority, Status Status, string ModifiedBy, uint RowVersion);

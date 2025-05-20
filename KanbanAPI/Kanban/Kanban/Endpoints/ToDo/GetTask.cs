@@ -2,7 +2,7 @@
 
 namespace Kanban.Endpoints.ToDo;
 
-public class GetTask : IEndpoint
+public sealed class GetTask : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder routeBuilder)
     {

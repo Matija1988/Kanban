@@ -1,8 +1,6 @@
 ﻿using Application.Abstractions.Behaviours;
 using Application.Abstractions.Messaging.Events;
 using Application.Abstractions.Messaging.Handlers;
-using Application.Handlers.Tasks;
-using Application.Handlers.Users;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,16 +19,23 @@ public static class DependancyInjection
         services.AddScoped<INotificationHandler<TaskChangedEvent>, TaskNotificationHandler>();
         services.AddScoped<INotificationHandler<CommentChangedEvents>, CommentNotificationHandler>();
 
-        services.AddScoped<IRequestHandler<PaginateTasksQuery, Result<PagedList<TodoResponse>>>, PaginateTasksHandler>();
-        services.AddScoped<IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>, GetTaskDetails>();
-        services.AddScoped<IRequestHandler<UpdateTaskCommand, Result<bool>>, UpdateTaskHandler>();
-        services.AddScoped<IRequestHandler<CreateToDoCommand, Result<int>>, CreateTaskHandler>();
-        services.AddScoped<IRequestHandler<DeleteTaskCommand, Result<bool>>, DeleteTaskHandler>();
+        services.AddTransient<IRequestHandler<PaginateTasksQuery, Result<PagedList<TodoResponse>>>, PaginateTasksHandler>();
+        services.AddTransient<IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>, GetTaskDetails>();
+        services.AddTransient<IRequestHandler<UpdateTaskCommand, Result<bool>>, UpdateTaskHandler>();
+        services.AddTransient<IRequestHandler<CreateToDoCommand, Result<int>>, CreateTaskHandler>();
+        services.AddTransient<IRequestHandler<DeleteTaskCommand, Result<bool>>, DeleteTaskHandler>();
 
-        services.AddScoped<IRequestHandler<ChangeTaskStatusPriorityCommand, Result<bool>>, ChangeTaskStatusPriority>();
+        services.AddTransient<IRequestHandler<ChangeTaskStatusPriorityCommand, Result<bool>>, ChangeTaskStatusPriority>();
 
-        services.AddScoped<IRequestHandler<LoginCommand, Result<string>>, LoginHandler>();
-        services.AddScoped<IRequestHandler<RegisterUserCommand, Result<Guid>>, RegisterUserHandler>();  
+        services.AddTransient<IRequestHandler<CommentTaskCommand, Result<Guid>>, CommentTaskHandler>();
+        services.AddTransient<IRequestHandler<DeleteCommentCommand, Result<bool>>, DeleteCommentHandler>();
+        services.AddTransient<IRequestHandler<ChangeCommentCommand, Result<bool>>, ChangeCommentHandler>();
+
+        services.AddTransient<IRequestHandler<AssignUsersToTaskCommand, Result<bool>>, AssignUsersToTaskHandler>();
+        services.AddTransient<IRequestHandler<RemoveUsersFromTaskCommand, Result<bool>>, RemoveUsersFromTasksHandler>();
+
+        services.AddTransient<IRequestHandler<LoginCommand, Result<string>>, LoginHandler>();
+        services.AddTransient<IRequestHandler<RegisterUserCommand, Result<Guid>>, RegisterUserHandler>();  
 
         services.AddValidatorsFromAssembly(typeof(DependancyInjection).Assembly,
             includeInternalTypes: true);
