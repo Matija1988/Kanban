@@ -1,10 +1,7 @@
 using Application;
-using HealthChecks.UI.Client;
 using Infrastructure;
-using Infrastructure.Database;
+using Infrastructure.EntityConfigurations.DataSeed;
 using KanbanAPI;
-using KanbanAPI.Extensions;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using StackExchange.Redis;
 using System.Reflection;
@@ -60,6 +57,7 @@ if (app.Environment.IsDevelopment())
 if (app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
 {
     app.ApplyMigrations();
+
 }
 
 app.UseSerilogRequestLogging();
@@ -68,6 +66,8 @@ app.UseRequestContextLogging();
 app.UseStaticFiles();
 
 app.UseExceptionHandler();
+
+app.UseRateLimiter();
 
 app.UseAuthentication();
 

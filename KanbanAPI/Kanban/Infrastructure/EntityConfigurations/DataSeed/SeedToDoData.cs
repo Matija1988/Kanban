@@ -1,63 +1,54 @@
 ﻿using Common;
-using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.EntityConfigurations;
+namespace Infrastructure.EntityConfigurations.DataSeed;
 
-internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
+public static class SeedToDoData
 {
-    public void Configure(EntityTypeBuilder<ToDo> builder)
+    public static void Seed(ApplicationDBContext context)
     {
-        builder.HasKey(x => x.Id);
+        if (!context.Tasks.Any(t => t.CreatedBy == "seed"))
+        {
+            var now = DateTime.UtcNow;
+            var startDate = DateOnly.FromDateTime(now);
+            var endDate = now.AddMonths(1);
 
-        builder.HasMany(t => t.Comments)
-             .WithOne(c => c.ToDo)
-             .HasForeignKey(c => c.ToDoId)
-             .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Property(x => x.Priority).HasConversion<string>();
-        builder.Property(x => x.Status).HasConversion<string>();
-
-        builder.Property(t => t.RowVersion)
-       .IsConcurrencyToken()
-       .HasDefaultValueSql("gen_random_uuid()");
-
-        builder.HasData(
+            context.Tasks.AddRange(
+                new ToDo
+                {
+                    Id = Guid.Parse("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"),
+                    DateCreated = now.ToString(),
+                    DateModified = now.ToString(),
+                    CreatedBy = "seed",
+                    Title = "Increase power to the warp engine",
+                    DateStart = startDate.ToString(),
+                    DateEnd = endDate.ToString(),
+                    Status = Status.IN_PROGRESS,
+                    Priority = Priority.HIGH
+                },
+                new ToDo
+                {
+                    Id = Guid.Parse("47fb53da-e324-459e-9bb5-d2dccff741d7"),
+                    DateCreated = now.ToString(),
+                    DateModified = now.ToString(),
+                    CreatedBy = "seed",
+                    Title = "Task1",
+                    DateStart = startDate.ToString(),
+                    DateEnd = endDate.ToString(),
+                    Status = Status.TO_DO,
+                    Priority = Priority.MED
+                },
                   new ToDo
                   {
-                      Id = Guid.Parse("6cb4f5bb-764d-4344-9e29-35fc7b5e1d47"),
+                      Id = Guid.Parse("05fc5276-8a16-450d-ba3e-4760267ec381"),
                       DateCreated = DateTime.UtcNow.ToString(),
                       DateModified = DateTime.UtcNow.ToString(),
                       CreatedBy = "seed",
-                      Title = "Increase power to the warp engine",
+                      Title = "Task2",
                       DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
                       DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                      Status = Status.IN_PROGRESS,
-                      Priority = Priority.HIGH
+                      Status = Status.TO_DO,
+                      Priority = Priority.LOW
                   },
-                   new ToDo
-                   {
-                       Id = Guid.Parse("47fb53da-e324-459e-9bb5-d2dccff741d7"),
-                       DateCreated = DateTime.UtcNow.ToString(),
-                       DateModified = DateTime.UtcNow.ToString(),
-                       CreatedBy = "seed",
-                       Title = "Task1",
-                       DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
-                       DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                       Status = Status.TO_DO,
-                       Priority = Priority.MED
-                   },
-                    new ToDo
-                    {
-                        Id = Guid.Parse("05fc5276-8a16-450d-ba3e-4760267ec381"),
-                        DateCreated = DateTime.UtcNow.ToString(),
-                        DateModified = DateTime.UtcNow.ToString(),
-                        CreatedBy = "seed",
-                        Title = "Task2",
-                        DateStart = DateOnly.FromDateTime(DateTime.UtcNow).ToString(),
-                        DateEnd = DateTime.UtcNow.AddMonths(1).ToString(),
-                        Status = Status.TO_DO,
-                        Priority = Priority.LOW
-                    },
                     new ToDo
                     {
                         Id = Guid.Parse("de734256-7f1a-403d-a14c-6bd545426e08"),
@@ -118,6 +109,10 @@ internal class ToDosConfiguration : IEntityTypeConfiguration<ToDo>
                            Status = Status.TO_DO,
                            Priority = Priority.LOW,
                        }
-              );
+            // Add the rest...
+            );
+
+            context.SaveChangesAsync();
+        }
     }
 }

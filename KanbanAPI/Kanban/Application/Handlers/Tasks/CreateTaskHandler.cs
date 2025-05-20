@@ -1,13 +1,11 @@
 ﻿using Application.Abstractions.Messaging.Events;
 using Domain.GeneralErrors;
-using Microsoft.AspNetCore.SignalR;
-
 namespace Application.Handlers.Tasks;
 
 public sealed record CreateToDoCommand
     (string Title, string? Description, string DateTimeStart, string DateTimeEnd, string CreatedBy, Priority Priority, Status Status) : IRequest<Result<int>>;
 
-internal sealed class CreateTaskHandler(IApplicationDbContext context, IDateTimeProvider dateTimeProvider, IHubContext<TaskHub> hubContext, ICacheService cacheService, IMediator mediator)
+internal sealed class CreateTaskHandler(IApplicationDbContext context, IDateTimeProvider dateTimeProvider, IMediator mediator)
     : IRequestHandler<CreateToDoCommand, Result<int>>
 {
     public async Task<Result<int>> Handle(CreateToDoCommand request, CancellationToken cancellation = default)
@@ -34,7 +32,7 @@ internal sealed class CreateTaskHandler(IApplicationDbContext context, IDateTime
 
         if(success > 0)
         {
-            await mediator.Publish(new TaskCreatedEvent(toDo), cancellation);
+            await mediator.Publish(new TaskChangedEvent(toDo), cancellation);
         }
 
         return success > 0

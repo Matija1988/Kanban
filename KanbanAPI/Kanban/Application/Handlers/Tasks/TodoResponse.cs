@@ -15,6 +15,7 @@ public sealed record TodoResponse
 
     public string Priority { get; set; }
     public string Status { get; set; }
+    public string? RowVersion { get; set; }
 
     public List<Link> Links { get; set; } = new();
 

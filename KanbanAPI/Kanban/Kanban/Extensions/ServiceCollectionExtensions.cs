@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
-
 namespace KanbanAPI.Extensions;
 
 internal static class ServiceCollectionExtensions

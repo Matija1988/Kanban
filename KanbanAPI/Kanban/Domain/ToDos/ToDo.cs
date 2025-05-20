@@ -25,6 +25,10 @@ public class ToDo : BaseEntity
 
     [Column(TypeName = "varchar(15)")]
     public Status Status { get; set; } = Status.TO_DO;
+
+    [Timestamp]
+    [Column("xmin")]
+    public uint RowVersion { get; set; }
     public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
     public ICollection<UserToDo> UserToDos { get; set; } = new List<UserToDo>();

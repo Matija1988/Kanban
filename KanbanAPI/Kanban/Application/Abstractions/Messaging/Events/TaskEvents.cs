@@ -1,3 +1,3 @@
 ﻿namespace Application.Abstractions.Messaging.Events;
 
-public record TaskCreatedEvent(ToDo Task) : INotification;
+public record TaskChangedEvent(ToDo Task, TaskChangeType ChangeType) : INotification;

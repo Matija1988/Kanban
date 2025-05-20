@@ -28,6 +28,7 @@ public class GetTaskDetails(IApplicationDbContext context) : IRequestHandler<Get
                   DateStart = x.DateStart,
                   Status = x.Status.ToString(),
                   Priority = x.Priority.ToString(),
+                  RowVersion = x.RowVersion.ToString(),
 
                   Comments = x.Comments.Select(c => new CommentResponse(
                       c.Id,

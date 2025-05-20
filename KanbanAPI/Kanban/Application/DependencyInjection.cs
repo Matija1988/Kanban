@@ -18,10 +18,11 @@ public static class DependancyInjection
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehavior<,>));
 
         services.AddScoped<INotificationHandler<MyEvent>, MyEventHandler>();
-        services.AddScoped<INotificationHandler<TaskCreatedEvent>, TaskNotificationHandler>();
+        services.AddScoped<INotificationHandler<TaskChangedEvent>, TaskNotificationHandler>();
 
         services.AddScoped<IRequestHandler<PaginateTasksQuery, Result<PagedList<TodoResponse>>>, PaginateTasksHandler>();
         services.AddScoped<IRequestHandler<GetTaskDetailsQuery, Result<TodoResponse>>, GetTaskDetails>();
+        services.AddScoped<IRequestHandler<UpdateTaskCommand, Result<bool>>, UpdateTaskHandler>();
         services.AddScoped<IRequestHandler<CreateToDoCommand, Result<int>>, CreateTaskHandler>();
 
         services.AddScoped<IRequestHandler<LoginCommand, Result<string>>, LoginHandler>();

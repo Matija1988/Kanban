@@ -1,10 +1,9 @@
-﻿
-using Application.Abstractions.Messaging.Events;
+﻿using Application.Abstractions.Messaging.Events;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Application.Abstractions.Messaging.Handlers;
 
-public sealed class TaskNotificationHandler : INotificationHandler<TaskCreatedEvent>
+public sealed class TaskNotificationHandler : INotificationHandler<TaskChangedEvent>
 {
     private readonly ICacheService _cache;
     private readonly IHubContext<TaskHub> _hubContext;
@@ -15,14 +14,19 @@ public sealed class TaskNotificationHandler : INotificationHandler<TaskCreatedEv
         _hubContext = hubContext;
     }
 
-    public async Task Handle(TaskCreatedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(TaskChangedEvent notification, CancellationToken cancellationToken)
     {
         await _cache.RemoveByPatternAsync("tasks:*");
-        await _hubContext.Clients.All.SendAsync("TaskCreated", new
+
+        var eventName = notification.ChangeType == TaskChangeType.Created ? "TaskCreated" : "TaskUpdated";
+
+        await _hubContext.Clients.All.SendAsync(eventName, new
         {
             TaskId = notification.Task.Id,
             Title = notification.Task.Title,
-            CreatedAt = notification.Task.DateCreated
+            Status = notification.Task.Status.ToString(),
+            Priority = notification.Task.Priority.ToString(),
+            ModifiedAt = notification.Task.DateModified ?? notification.Task.DateCreated
         });
     }
 }

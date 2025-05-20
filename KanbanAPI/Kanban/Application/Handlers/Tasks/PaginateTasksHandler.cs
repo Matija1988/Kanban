@@ -1,9 +1,5 @@
-﻿using Application.Abstractions.Data;
-using Application.Abstractions.HATEOS;
-using Application.Abstractions.Messaging;
+﻿using Application.Abstractions.HATEOS;
 using Domain.GeneralErrors;
-using Domain.ToDos;
-using System.Linq;
 
 namespace Application.Handlers.Tasks;
 
@@ -45,6 +41,7 @@ internal class PaginateTasksHandler(IApplicationDbContext context, ILinkService 
          DateStart = x.DateStart,
          Status = x.Status.ToString(),
          Priority = x.Priority.ToString(),
+         RowVersion = x.RowVersion.ToString(),  
 
          Comments = x.Comments.Select(c => new CommentResponse(
              c.Id,

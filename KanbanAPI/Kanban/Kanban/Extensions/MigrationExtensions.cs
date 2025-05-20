@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.EntityConfigurations.DataSeed;
 
 namespace KanbanAPI.Extensions;
 
@@ -13,5 +13,6 @@ public static class MigrationExtensions
             scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
 
         dbContext.Database.Migrate();
+       // SeedToDoData.Seed(dbContext);
     }
 }
